@@ -113,3 +113,39 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 print("Dimensiones de entrenamiento:", X_train.shape)
 print("Dimensiones de prueba:", X_test.shape)
+
+#Entrenamiento y Evaluación
+
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+lr_model = LinearRegression()
+lr_model.fit(X_train, y_train)
+
+
+y_pred = lr_model.predict(X_test)
+
+
+mae = mean_absolute_error(y_test, y_pred)
+mse = mean_squared_error(y_test, y_pred)
+rmse = np.sqrt(mse)
+r2 = r2_score(y_test, y_pred)
+
+
+print("Evaluación del modelo:")
+print(f"MAE (Error absoluto medio): {mae:.2f}")
+print(f"MSE (Error cuadrático medio): {mse:.2f}")
+print(f"RMSE (Raíz del error cuadrático medio): {rmse:.2f}")
+print(f"R² Score (Coeficiente de determinación): {r2:.4f}")
+
+plt.figure(figsize=(10, 6))
+plt.scatter(y_test, y_pred, alpha=0.6, color='teal')
+plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], '--r')
+plt.xlabel("Precio real")
+plt.ylabel("Precio predicho")
+plt.title("Precio real vs Predicho")
+plt.grid(True)
+plt.show()
